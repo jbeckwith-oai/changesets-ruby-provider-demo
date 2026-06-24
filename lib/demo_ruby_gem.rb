@@ -12,4 +12,8 @@ module DemoRubyGem
   def self.second_feature_flag
     :changesets_ruby_provider_demo_second_release
   end
+
+  def self.release_pr_feature_flag
+    :changesets_ruby_provider_release_pr_demo
+  end
 end
