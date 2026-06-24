@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name = "demo-ruby-gem"
-  spec.version = "0.2.0"
+  spec.version = "0.2.1"
   spec.summary = "A tiny gem for demonstrating Changesets Ruby version providers"
   spec.authors = ["Changesets Ruby Provider Demo"]
   spec.files = Dir["lib/**/*.rb"]
