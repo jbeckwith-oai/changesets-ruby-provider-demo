@@ -52,6 +52,10 @@ git add .
 git commit -m "Version Ruby gem to 0.2.0"
 
 node -e 'const fs = require("fs"); fs.writeFileSync(".changeset/second-release.md", "---\n\"demo-ruby-gem\": patch\n---\n\nAdd another tiny Ruby feature.\n")'
+node -e 'const fs = require("fs"); const path = "lib/demo_ruby_gem.rb"; const content = fs.readFileSync(path, "utf8"); fs.writeFileSync(path, content.replace("  def self.feature_flag\n    :changesets_ruby_provider_demo\n  end\n", "  def self.feature_flag\n    :changesets_ruby_provider_demo\n  end\n\n  def self.second_feature_flag\n    :changesets_ruby_provider_demo_second_release\n  end\n"))'
+
+git add .
+git commit -m "Add second demo feature with changeset"
 
 node "$CHANGESET_BIN" version
 
@@ -62,5 +66,8 @@ assert_json_version "0.1.0"
 assert_ruby_version "0.2.1"
 
 git diff -- lib/demo_ruby_gem/version.rb demo-ruby-gem.gemspec Gemfile.lock package.json
+
+git add .
+git commit -m "Version Ruby gem to 0.2.1"
 
 echo "Ruby provider demo completed successfully."
