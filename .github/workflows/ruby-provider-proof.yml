@@ -1,20 +1,28 @@
 name: Ruby provider proof
 
 on:
+  push:
+  pull_request:
   workflow_dispatch:
     inputs:
       changesets_repository:
         description: Changesets repository to test
         required: true
-        default: changesets/changesets
+        default: jbeckwith-oai/changesets
       changesets_ref:
         description: Changesets branch, tag, SHA, or PR ref to test
         required: true
         default: main
 
+permissions:
+  contents: read
+
 jobs:
   proof:
     runs-on: ubuntu-latest
+    env:
+      CHANGESETS_REPOSITORY: ${{ inputs.changesets_repository || 'jbeckwith-oai/changesets' }}
+      CHANGESETS_REF: ${{ inputs.changesets_ref || 'main' }}
 
     steps:
       - name: Check out demo repository
@@ -25,9 +33,13 @@ jobs:
       - name: Check out Changesets
         uses: actions/checkout@v4
         with:
-          repository: ${{ inputs.changesets_repository }}
-          ref: ${{ inputs.changesets_ref }}
+          repository: ${{ env.CHANGESETS_REPOSITORY }}
+          ref: ${{ env.CHANGESETS_REF }}
           path: changesets
+
+      - name: Show proof target
+        run: |
+          echo "Testing $CHANGESETS_REPOSITORY at $CHANGESETS_REF"
 
       - name: Set up Node
         uses: actions/setup-node@v4

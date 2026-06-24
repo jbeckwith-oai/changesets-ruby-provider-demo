@@ -42,4 +42,14 @@ Expected proof points:
 
 ## GitHub Actions
 
-The `Ruby provider proof` workflow can run the same proof against a Changesets branch, tag, or pull-request ref. Use the workflow inputs to choose the Changesets repository and ref to test.
+The `Ruby provider proof` workflow runs on pushes and pull requests in this demo repository. It can also be run manually against any Changesets branch, tag, SHA, or pull-request ref.
+
+By default, the workflow checks out:
+
+- repository: `jbeckwith-oai/changesets`
+- ref: `main`
+
+For manual runs, set the workflow inputs to the Changesets repository and ref you want to test. For example, to test a Changesets pull request from the upstream repository, use:
+
+- repository: `changesets/changesets`
+- ref: `pull/<PR_NUMBER>/head`
