@@ -1,0 +1,17 @@
+PATH
+  remote: .
+  specs:
+    demo-ruby-gem (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  demo-ruby-gem!
+
+BUNDLED WITH
+   4.0.9
