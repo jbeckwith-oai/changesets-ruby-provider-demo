@@ -8,4 +8,8 @@ module DemoRubyGem
   def self.feature_flag
     :changesets_ruby_provider_demo
   end
+
+  def self.second_feature_flag
+    :changesets_ruby_provider_demo_second_release
+  end
 end
