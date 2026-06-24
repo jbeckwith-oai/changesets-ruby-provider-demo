@@ -1,0 +1,50 @@
+name: Ruby provider proof
+
+on:
+  workflow_dispatch:
+    inputs:
+      changesets_repository:
+        description: Changesets repository to test
+        required: true
+        default: changesets/changesets
+      changesets_ref:
+        description: Changesets branch, tag, SHA, or PR ref to test
+        required: true
+        default: main
+
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out demo repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check out Changesets
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.changesets_repository }}
+          ref: ${{ inputs.changesets_ref }}
+          path: changesets
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+
+      - name: Build Changesets
+        working-directory: changesets
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Run Ruby provider proof
+        run: CHANGESETS_ROOT="$GITHUB_WORKSPACE/changesets" ./scripts/run-demo.sh
