@@ -3,6 +3,26 @@ set -euo pipefail
 
 CHANGESETS_ROOT="${CHANGESETS_ROOT:-/Users/jbeckwith/code/changesets}"
 CHANGESET_BIN="$CHANGESETS_ROOT/packages/cli/bin.js"
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+cd "$REPO_ROOT"
+
+if [[ ! -f .changeset/first-release.md ]]; then
+  if ! git rev-parse --verify demo-start >/dev/null 2>&1; then
+    echo "This repository is missing .changeset/first-release.md and the demo-start tag." >&2
+    exit 1
+  fi
+
+  tmp_dir="$(mktemp -d)"
+  trap 'git worktree remove "$tmp_dir/replay" --force >/dev/null 2>&1 || true; rm -rf "$tmp_dir"' EXIT
+  git worktree add --detach "$tmp_dir/replay" demo-start
+  cd "$tmp_dir/replay"
+  CHANGESETS_ROOT="$CHANGESETS_ROOT" ./scripts/run-demo.sh
+  exit 0
+fi
+
+git config user.name >/dev/null || git config user.name "Changesets Ruby Provider Demo"
+git config user.email >/dev/null || git config user.email "changesets-ruby-provider-demo@example.com"
 
 assert_contains() {
   local file="$1"
