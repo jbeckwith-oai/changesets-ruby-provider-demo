@@ -12,7 +12,7 @@ on:
       changesets_ref:
         description: Changesets branch, tag, SHA, or PR ref to test
         required: true
-        default: main
+        default: codex/ruby-version-provider
 
 permissions:
   contents: read
@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CHANGESETS_REPOSITORY: ${{ inputs.changesets_repository || 'jbeckwith-oai/changesets' }}
-      CHANGESETS_REF: ${{ inputs.changesets_ref || 'main' }}
+      CHANGESETS_REF: ${{ inputs.changesets_ref || 'codex/ruby-version-provider' }}
 
     steps:
       - name: Check out demo repository

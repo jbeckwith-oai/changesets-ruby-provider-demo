@@ -47,7 +47,7 @@ The `Ruby provider proof` workflow runs on pushes and pull requests in this demo
 By default, the workflow checks out:
 
 - repository: `jbeckwith-oai/changesets`
-- ref: `main`
+- ref: `codex/ruby-version-provider`
 
 For manual runs, set the workflow inputs to the Changesets repository and ref you want to test. For example, to test a Changesets pull request from the upstream repository, use:
 
