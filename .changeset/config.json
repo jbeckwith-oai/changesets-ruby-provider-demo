@@ -1,6 +1,11 @@
 {
   "$schema": "https://unpkg.com/@changesets/config/schema.json",
-  "changelog": false,
+  "changelog": [
+    "@changesets/cli/changelog",
+    {
+      "repo": "jbeckwith-oai/changesets-ruby-provider-demo"
+    }
+  ],
   "commit": false,
   "privatePackages": {
     "version": true,

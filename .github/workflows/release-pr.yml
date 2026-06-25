@@ -32,6 +32,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Install demo dependencies
+        run: npm ci
+
       - name: Build Changesets
         working-directory: .changesets-checkout
         run: |
