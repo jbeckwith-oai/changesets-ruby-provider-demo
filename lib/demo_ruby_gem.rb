@@ -20,4 +20,8 @@ module DemoRubyGem
   def self.release_summary
     "demo-ruby-gem #{VERSION}"
   end
+
+  def self.provider_capabilities
+    [:version_file, :gemspec, :gemfile_lock]
+  end
 end
