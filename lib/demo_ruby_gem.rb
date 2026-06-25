@@ -16,4 +16,8 @@ module DemoRubyGem
   def self.release_pr_feature_flag
     :changesets_ruby_provider_release_pr_demo
   end
+
+  def self.release_summary
+    "demo-ruby-gem #{VERSION}"
+  end
 end
