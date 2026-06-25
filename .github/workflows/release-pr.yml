@@ -40,10 +40,34 @@ jobs:
           pnpm build
 
       - name: Create version pull request
-        uses: changesets/action@v1
-        with:
-          version: node .changesets-checkout/packages/cli/bin.js version
-          title: Version Ruby gem
-          commit: Version Ruby gem
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_BRANCH: changeset-release/main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout -B "$RELEASE_BRANCH" origin/main
+
+          node .changesets-checkout/packages/cli/bin.js status --output "$RUNNER_TEMP/changesets-status.json"
+          node .changesets-checkout/packages/cli/bin.js version
+          node .github/scripts/build-release-pr-body.mjs "$RUNNER_TEMP/changesets-status.json" "$RUNNER_TEMP/release-pr-body.md"
+
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No release changes to commit."
+            exit 0
+          fi
+
+          git add .
+          git commit -m "Version Ruby gem"
+          git push origin HEAD:"$RELEASE_BRANCH" --force
+
+          if pr_number="$(gh pr view "$RELEASE_BRANCH" --json number --jq .number 2>/dev/null)"; then
+            gh pr edit "$pr_number" --title "Version Ruby gem" --body-file "$RUNNER_TEMP/release-pr-body.md"
+          else
+            gh pr create \
+              --base main \
+              --head "$RELEASE_BRANCH" \
+              --title "Version Ruby gem" \
+              --body-file "$RUNNER_TEMP/release-pr-body.md"
+          fi
