@@ -44,6 +44,8 @@ Expected proof points:
 
 The `Ruby provider proof` workflow runs on pushes and pull requests in this demo repository. It can also be run manually against any Changesets branch, tag, SHA, or pull-request ref.
 
+The `Release PR` workflow uses the standard Changesets changelog generator, so the generated release pull request includes changelog context in addition to Ruby version-file updates.
+
 By default, the workflow checks out:
 
 - repository: `jbeckwith-oai/changesets`
