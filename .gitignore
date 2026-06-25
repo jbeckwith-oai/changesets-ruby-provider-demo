@@ -1,3 +1,4 @@
 .bundle/
+.changesets-checkout/
 pkg/
 vendor/bundle/

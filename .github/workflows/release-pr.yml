@@ -25,7 +25,7 @@ jobs:
         with:
           repository: jbeckwith-oai/changesets
           ref: codex/ruby-version-provider
-          path: changesets
+          path: .changesets-checkout
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -33,7 +33,7 @@ jobs:
           node-version: 22
 
       - name: Build Changesets
-        working-directory: changesets
+        working-directory: .changesets-checkout
         run: |
           corepack enable
           pnpm install --frozen-lockfile
@@ -42,7 +42,7 @@ jobs:
       - name: Create version pull request
         uses: changesets/action@v1
         with:
-          version: node changesets/packages/cli/bin.js version
+          version: node .changesets-checkout/packages/cli/bin.js version
           title: Version Ruby gem
           commit: Version Ruby gem
         env:
