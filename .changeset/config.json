@@ -1,7 +1,7 @@
 {
   "$schema": "https://unpkg.com/@changesets/config/schema.json",
   "changelog": [
-    "@changesets/cli/changelog",
+    "./.changesets-checkout/packages/cli/dist/changelog.mjs",
     {
       "repo": "jbeckwith-oai/changesets-ruby-provider-demo"
     }
