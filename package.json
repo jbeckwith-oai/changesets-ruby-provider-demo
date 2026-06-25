@@ -1,8 +1,5 @@
 {
   "name": "demo-ruby-gem",
   "version": "0.1.0",
-  "private": true,
-  "devDependencies": {
-    "@changesets/cli": "^2.31.0"
-  }
+  "private": true
 }
